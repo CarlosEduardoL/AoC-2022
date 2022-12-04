@@ -63,8 +63,8 @@ impl Options {
     }
 }
 
-fn p1() { // 11841
-    let input = include_str!("inputs/day2-p1.txt").lines();
+pub fn p1() { // 11841
+    let input = include_str!("inputs/day2.txt").lines();
     let res = input
         .map(|l| l.as_bytes())
         .map(|array| (Options::from(array[0]), Options::from(array[2])))
@@ -78,8 +78,8 @@ fn part1() {
     p1()
 }
 
-fn p2() { // 11841
-    let input = include_str!("inputs/day2-p1.txt").lines();
+pub fn p2() { // 11841
+    let input = include_str!("inputs/day2.txt").lines();
     let res = input
         .map(|l| l.as_bytes())
         .map(|array| (Options::from(array[0]), Results::from(array[2])))
