@@ -1,6 +1,8 @@
 use Options::*;
 use Results::*;
 
+use crate::shared::input;
+
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 enum Results {
     LOST = 0,
@@ -39,7 +41,6 @@ enum Options {
 
 impl Options {
     fn rps(self, yours: Self) -> i32 {
-        println!("{self:?} vs {yours:?}");
         yours as i32 + Results::from_opt(yours, self) as i32
     }
 
@@ -55,17 +56,30 @@ impl Options {
     fn from_res(self, res: Results) -> Options {
         unsafe {
             std::mem::transmute(match res {
-                LOST => if self as u8 - 1 > 0 {self as u8 - 1} else {3} ,
+                LOST => {
+                    if self as u8 - 1 > 0 {
+                        self as u8 - 1
+                    } else {
+                        3
+                    }
+                }
                 DRAW => self as u8,
-                WIN => if self as u8 + 1 < 4 {self as u8 + 1} else {1},
+                WIN => {
+                    if self as u8 + 1 < 4 {
+                        self as u8 + 1
+                    } else {
+                        1
+                    }
+                }
             })
         }
     }
 }
 
-pub fn p1() { // 11841
-    let input = include_str!("inputs/day2.txt").lines();
-    let res = input
+pub fn p1() {
+    // 11841
+    let res = input(2)
+        .lines()
         .map(|l| l.as_bytes())
         .map(|array| (Options::from(array[0]), Options::from(array[2])))
         .map(|(e, y)| e.rps(y))
@@ -78,12 +92,13 @@ fn part1() {
     p1()
 }
 
-pub fn p2() { // 11841
-    let input = include_str!("inputs/day2.txt").lines();
-    let res = input
+pub fn p2() {
+    // 13022
+    let res = input(2)
+        .lines()
         .map(|l| l.as_bytes())
         .map(|array| (Options::from(array[0]), Results::from(array[2])))
-        .map(|(e, y)| {e.rps(e.from_res(y))})
+        .map(|(e, y)| e.rps(e.from_res(y)))
         .sum::<i32>();
     println!("{res}");
 }

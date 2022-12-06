@@ -1,8 +1,10 @@
 use std::collections::HashSet;
 
+use crate::shared::input;
+
 pub fn p1() {
-    let input = include_str!("inputs/day3.txt").lines();
-    let result = input
+    let result = input(3)
+        .lines()
         .map(|l| l.split_at(l.len() / 2))
         .map(|(p1, p2)| {
             **p1.as_bytes()
@@ -27,8 +29,9 @@ fn part1() {
 }
 
 pub fn p2() {
-    let input = include_str!("inputs/day3.txt").lines().collect::<Vec<_>>();
-    let result = input
+    let result = input(3)
+        .lines()
+        .collect::<Vec<_>>()
         .chunks(3)
         .map(|e| {
             *e.iter()
@@ -49,7 +52,7 @@ pub fn p2() {
             _ => item - b'A' + 27,
         } as i32)
         .sum::<i32>();
-        println!("{result}");
+    println!("{result}");
 }
 
 #[test]

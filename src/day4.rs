@@ -1,4 +1,4 @@
-use std::result;
+use crate::shared::input;
 
 struct Range {
     min: i32,
@@ -10,13 +10,12 @@ impl Range {
         self.min <= other.min && self.max >= other.max
     }
     fn intersects(&self, other: &Range) -> bool {
-        !(self.max < other.min || self.min > other.max) 
-    } 
+        !(self.max < other.min || self.min > other.max)
+    }
 }
 
 pub fn p1() {
-    let input = include_str!("inputs\\day4.txt").trim_end();
-    let result = input
+    let result = input(4)
         .lines()
         .map(|l| {
             let mut ranges = l.split(",").map(|p| {
@@ -28,9 +27,7 @@ pub fn p1() {
             });
             (ranges.next().unwrap(), ranges.next().unwrap())
         })
-        .map(|(r1, r2)| {
-            (r1.contains(&r2) || r2.contains(&r1)) as i32
-        })
+        .map(|(r1, r2)| (r1.contains(&r2) || r2.contains(&r1)) as i32)
         .sum::<i32>();
     println!("{result}");
 }
@@ -42,8 +39,7 @@ fn part1() {
 }
 
 pub fn p2() {
-    let input = include_str!("inputs\\day4.txt").trim_end();
-    let result = input
+    let result = input(4)
         .lines()
         .map(|l| {
             let mut ranges = l.split(",").map(|p| {
